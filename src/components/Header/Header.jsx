@@ -21,7 +21,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3000/megaMenu")
+    fetch("https://digikala-react-snss.onrender.com/megaMenu")
       .then((res) => res.json())
       .then((data) => {
         setMenuItems(data);

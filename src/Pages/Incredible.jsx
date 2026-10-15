@@ -7,7 +7,7 @@ const Incredible = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3000/incredible")
+    fetch("https://digikala-react-snss.onrender.com/incredible")
       .then((response) => {
         if (!response.ok) {
           throw new Error("خطا در دریافت محصولات");
