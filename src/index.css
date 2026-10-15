@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@font-face {
+    font-family: "IRANYekanWeb";
+    src: url("./assets/fonts/IRANYekanWeb-Medium.woff2") format("woff2");
+    font-weight: 500;
+}    
+   
+@font-face {
+    font-family: "IRANYekanWeb";
+    src: url("./assets/fonts/IRANYekanWeb-Regular.woff2") format("woff2");
+    font-weight: 400;
+    
+}
+@font-face {
+    font-family: "IRANYekanWeb";
+    src: url("./assets/fonts/IRANYekanWeb-Bold.woff2") format("woff2");
+    font-weight: 700;
+    
+}
+@font-face {
+    font-family: "IRANYekanWeb";
+    src: url("./assets/fonts/IRANYekanWeb-ExtraBold.woff2") format("woff2");
+    font-weight: 800;
+    
+}
+body{
+    font-family: "IRANYekanWeb" , sans-serif;
+}
