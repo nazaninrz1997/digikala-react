@@ -21,17 +21,27 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    fetch("https://digikala-react-snss.onrender.com/megaMenu")
-      .then((res) => res.json())
-      .then((data) => {
-        setMenuItems(data);
+    fetch(`${import.meta.env.BASE_URL}db.json`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("خطا در دریافت اطلاعات منو");
+        }
 
-        if (data.length > 0) {
-          setActiveMenu(data[0].id);
+        return res.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data.megaMenu)) {
+          throw new Error("آرایه megaMenu در db.json پیدا نشد");
+        }
+
+        setMenuItems(data.megaMenu);
+
+        if (data.megaMenu.length > 0) {
+          setActiveMenu(data.megaMenu[0].id);
         }
       })
       .catch((error) => {
-        console.log("API Error:", error);
+        console.error("Menu API Error:", error);
       });
   }, []);
   return (

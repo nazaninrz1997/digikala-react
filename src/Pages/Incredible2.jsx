@@ -7,16 +7,20 @@ const Incredible2 = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch("https://digikala-react-snss.onrender.com/amazingmobile")
+    fetch(`${import.meta.env.BASE_URL}db.json`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("خطا در دریافت محصولات");
+          throw new Error("خطا در دریافت اطلاعات محصولات");
         }
 
         return response.json();
       })
       .then((data) => {
-        setProducts(data);
+        if (!Array.isArray(data.amazingmobile)) {
+          throw new Error("آرایه amazingmobile در db.json پیدا نشد");
+        }
+
+        setProducts(data.amazingmobile);
       })
       .catch((err) => {
         console.error(err);
@@ -26,6 +30,20 @@ const Incredible2 = () => {
         setLoading(false);
       });
   }, []);
+
+  const getImageSrc = (img) => {
+    if (!img) return "";
+
+    if (
+      img.startsWith("http://") ||
+      img.startsWith("https://") ||
+      img.startsWith("data:")
+    ) {
+      return img;
+    }
+
+    return `${import.meta.env.BASE_URL}${img.replace(/^\.?\//, "")}`;
+  };
 
   return (
     <div dir="rtl" className="min-h-screen bg-[#f5f5f5] p-4 md:p-8">
@@ -44,22 +62,20 @@ const Incredible2 = () => {
           <p className="text-center py-10">در حال دریافت محصولات...</p>
         ) : error ? (
           <p className="text-center py-10 text-red-600">
-            دریافت محصولات ناموفق بود. سرور را بررسی کنید.
+            دریافت محصولات ناموفق بود. فایل db.json را بررسی کنید.
           </p>
+        ) : products.length === 0 ? (
+          <p className="text-center py-10">محصولی برای نمایش وجود ندارد.</p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-            {products.map((product) => (
+            {products.map((product, index) => (
               <div
-                key={product.img}
+                key={product.id ?? product.img ?? index}
                 className="bg-white rounded-xl overflow-hidden p-3 cursor-pointer"
               >
                 <img
-                  src={
-                    product.img?.startsWith("./")
-                      ? product.img.replace("./", "/")
-                      : product.img
-                  }
-                  alt={product.title}
+                  src={getImageSrc(product.img)}
+                  alt={product.title ?? "محصول"}
                   className="w-full h-36 md:h-48 object-contain"
                 />
 
