@@ -45,7 +45,7 @@ const Header = () => {
       });
   }, []);
   return (
-    <div dir="rtl" className="w-full relative z-10">
+    <div dir="rtl" className="w-full bg-white sticky z-100 top-0">
       <div className="w-full h-auto md:h-15">
         <img
           src={image1}
